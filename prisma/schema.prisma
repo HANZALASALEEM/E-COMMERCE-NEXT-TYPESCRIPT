@@ -1,0 +1,82 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// model users {
+//   id       Int     @id @default(autoincrement())
+//   email    String  @unique
+//   password String?
+//   name     String?
+//   cart     cart?
+// }
+
+// model products {
+//   id          Int        @id @default(autoincrement())
+//   title       String?
+//   description String?
+//   brand       String?
+//   sellerName  String?
+//   price       Int?
+//   cartItems   cartItem[]
+// }
+
+// model cart {
+//   id      Int        @id @default(autoincrement())
+//   // id      String        @id @unique
+//   user    users      @relation(fields: [user_id], references: [id])
+//   user_id Int        @unique
+//   items   cartItem[]
+// }
+
+// model cartItem {
+//   id         Int      @id @default(autoincrement())
+//   cart       cart     @relation(fields: [cart_id], references: [id])
+//   cart_id    Int
+//   product    products @relation(fields: [product_id], references: [id])
+//   product_id Int
+// }
+
+
+model users {
+  id       Int     @id @default(autoincrement())
+  email    String  @unique
+  password String?
+  name     String?
+  cart     cart?
+}
+
+model products {
+  id          Int        @id @default(autoincrement())
+  title       String?
+  description String?
+  brand       String?
+  sellerName  String?
+  price       Int?
+  cartItems   cartItem[]
+}
+
+model cart {
+  id      Int        @id @default(autoincrement())
+  user    users      @relation(fields: [user_id], references: [id])
+  user_id Int        @unique
+  items   cartItem[]
+}
+
+model cartItem {
+  id         Int      @id @default(autoincrement())
+  cart       cart     @relation(fields: [cart_id], references: [id])
+  cart_id    Int
+  product    products @relation(fields: [product_id], references: [id])
+  product_id Int
+}
