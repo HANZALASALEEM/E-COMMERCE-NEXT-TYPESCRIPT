@@ -2,13 +2,10 @@
 import Image from "next/image";
 import { useState, FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import { signIn, useSession } from "next-auth/react";
-
+import { signIn } from "next-auth/react";
 
 export default function Home() {
-
-  const { data: session } = useSession();
-  const router = useRouter()
+  const router = useRouter();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
@@ -28,10 +25,7 @@ export default function Home() {
         alert("User already exists");
       } else if (response.status === 201) {
         const data = await response.json();
-        // console.log(data.data);
-        // sessionStorage.setItem("user_id", data.data.id);
-        // router.push(`/home?user_id=${data.data.id}`)
-        router.push("/signIn")
+        router.push("/signIn");
       } else {
         console.error("Signup failed");
       }
@@ -41,35 +35,14 @@ export default function Home() {
   };
 
   const handleSignIn = () => {
-    router.push("/signIn")
+    router.push("/signIn");
   };
 
   const googleSignIn = async () => {
-    // try {
-      await signIn("google", {
-        callbackUrl:"/home",
-        redirect: false,
-      });
-  
-    //   const userEmail = session?.user?.email;
-  
-    //   if (userEmail) {
-    //     const response = await fetch("/api/findUserWithEmail", {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify({ userEmail }),
-    //     });
-  
-    //     const data = await response.json();
-    //     const userId = data.data.id;
-  
-    //     router.push(`/home?user_id=${userId}`);
-    //   }
-    // } catch (error) {
-    //   console.error("Error during Google sign-in:", error);
-    // }
+    await signIn("google", {
+      callbackUrl: "/home",
+      redirect: false,
+    });
   };
 
   return (
@@ -149,27 +122,17 @@ export default function Home() {
             className="bg-white flex items-center justify-center border-gray-400 border-2 rounded-xl my-2 text-sm py-1 rounded-sm w-full"
             onClick={googleSignIn}
           >
-            <Image src="/images/gogle.png" alt="google" width={20} height={20} className="mx-3"/>
+            <Image
+              src="/images/gogle.png"
+              alt="google"
+              width={20}
+              height={20}
+              className="mx-3"
+            />
             Sign Up with Google
           </button>
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
       </div>
     </div>
   );
 }
-

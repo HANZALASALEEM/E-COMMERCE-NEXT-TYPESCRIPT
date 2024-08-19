@@ -20,7 +20,6 @@ type CartItem = {
 function Cart() {
   const searchParams = useSearchParams();
   const { data: session } = useSession();
-  //   const userId = searchParams.get('user_id');
 
   const [user_id, setUser_id] = useState(parseInt(session?.user?.id as string));
   const [cart_id, setCart_id] = useState<number>(0);
@@ -120,11 +119,9 @@ function Cart() {
       {cartItemList?.map((item: CartItem) => (
         <div
           className="w-full my-3  px-16 flex items-center flex-col md:flex-row md:gap-4 border-2"
-          key={item.product.id}>
-          <button
-            className="w-64 h-64"
-            // onClick={() => handleProductDetailPage(item)}
-          >
+          key={item.product.id}
+        >
+          <button className="w-64 h-64">
             <Image
               src="/images/product-img.jpg"
               alt="product image"

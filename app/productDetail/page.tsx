@@ -16,7 +16,6 @@ type product = {
 function ProductDetail() {
   const searchParams = useSearchParams();
   const { data: session } = useSession();
-  //   const userId = searchParams.get('user_id');
   const productId = searchParams.get("product_id");
   const router = useRouter();
   const [user_id, setUser_id] = useState<number>(
@@ -30,12 +29,10 @@ function ProductDetail() {
   const [item_id, setItem_id] = useState<number>(parseInt(productId as string));
   const [cartItemAmount, setCartItemAmount] = useState<number>(0);
   const [productData, setProductData] = useState<product | null>();
+
   useEffect(() => {
     setCart_id(user_id);
     fetchUniqueItems();
-    console.log(user_id);
-    console.log(product_id);
-    // setProductData(JSON.parse(sessionStorage.getItem("productData") as string))
   }, []);
 
   const handleAddToCart = async () => {
@@ -55,8 +52,6 @@ function ProductDetail() {
           alert("Added in Cart");
         } else if (response.status === 409) {
           alert("Product already exists in cart");
-        } else {
-          console.log(" Error Status: ", response.status);
         }
       } catch (error) {
         console.error("Error:", error);
@@ -131,14 +126,7 @@ function ProductDetail() {
       {/* navbar */}
       <div className="w-screen h-16 bg-slate-900 items-center justify-between flex flex-row py-2 px-4">
         {/* sell Button */}
-        <div className=" h-full w-1/4 items-center justify-center flex">
-          {/* <button
-						className="bg-yellow-500 w-64 h-full rounded-2xl hover:border-yellow-500 hover:bg-slate-900 hover:text-white hover:border-2 cursor-pointer"
-						// onClick={handleSellSomething}
-					>
-						Sell Something
-					</button> */}
-        </div>
+        <div className=" h-full w-1/4 items-center justify-center flex"></div>
         {/* search bar */}
         <div className=" h-full w-2/4 items-center justify-center flex">
           <div className="w-full md:w-3/4 h-full flex justify-center ">
@@ -159,7 +147,8 @@ function ProductDetail() {
         <div className="h-full w-1/4 flex items-center justify-center">
           <button
             onClick={handleCartButton}
-            className="h-full w-full flex flex-col items-center justify-center">
+            className="h-full w-full flex flex-col items-center justify-center"
+          >
             <div className="w-4 h-4 bg-white rounded-full flex items-center justify-center text-slate-900 font-bold text-sm">
               <p>{cartItemAmount}</p>
             </div>
@@ -193,7 +182,8 @@ function ProductDetail() {
           <div className="border-2 border-gray-400 w-96 flex flex-col my-4 mx-2 items-center justify-center rounded-xl">
             <button
               className="bg-yellow-500 w-64 h-8 my-3 rounded-xl hover:border-yellow-500 hover:bg-white hover:border-2"
-              onClick={handleAddToCart}>
+              onClick={handleAddToCart}
+            >
               Add to Cart
             </button>
             <button className="bg-yellow-500 w-64 h-8 my-3 rounded-xl hover:border-yellow-500 hover:bg-white hover:border-2">

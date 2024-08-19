@@ -1,9 +1,9 @@
 "use client";
 import Image from "next/image";
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
-import { cookies } from "next/headers";
+
 type product = {
   title: string;
   description: string;
@@ -15,8 +15,6 @@ type product = {
 function Home() {
   const { data: session } = useSession();
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const userId = searchParams.get("user_id");
   const [productList, setProductList] = useState<product[]>([]);
   const [user_id, setUser_id] = useState(parseInt(session?.user?.id as string));
   const [cart_id, setCart_id] = useState<number>(0);
@@ -83,8 +81,6 @@ function Home() {
   }, [fetchCartItems]);
 
   const handleProductDetailPage = (item: any) => {
-    // sessionStorage.setItem("product_id", item.id);
-    // sessionStorage.setItem("productData",JSON.stringify(item))
     router.push(`/productDetail?product_id=${item.id}`);
   };
   const handleCartButton = () => {
@@ -92,9 +88,6 @@ function Home() {
   };
 
   return (
-    // <>
-    // {user_id ? (
-    // 	<>
     <div>
       {/* navbar */}
       <div className="w-screen h-16 bg-slate-900 items-center justify-between flex flex-row py-2 px-4">
@@ -102,7 +95,8 @@ function Home() {
         <div className=" h-full w-1/4 items-center justify-center flex">
           <button
             className="bg-yellow-500 w-64 h-full rounded-2xl hover:border-yellow-500 hover:bg-slate-900 hover:text-white hover:border-2 cursor-pointer"
-            onClick={handleSellSomething}>
+            onClick={handleSellSomething}
+          >
             Sell Something
           </button>
         </div>
@@ -126,7 +120,8 @@ function Home() {
         <div className="h-full w-1/4 flex items-center justify-center">
           <button
             onClick={handleCartButton}
-            className="h-full w-full flex flex-col items-center justify-center">
+            className="h-full w-full flex flex-col items-center justify-center"
+          >
             <div className="w-4 h-4 bg-white rounded-full flex items-center justify-center text-slate-900 font-bold text-sm">
               <p>{cartItemAmount}</p>
             </div>
@@ -148,13 +143,11 @@ function Home() {
         )}
       </div>
       {productList.map((item) => (
-        <div
-          className="w-full my-3  px-16 flex items-center flex-col md:flex-row md:gap-4 border-2"
-          // key={item.id}
-        >
+        <div className="w-full my-3  px-16 flex items-center flex-col md:flex-row md:gap-4 border-2">
           <button
             className="w-64 h-64"
-            onClick={() => handleProductDetailPage(item)}>
+            onClick={() => handleProductDetailPage(item)}
+          >
             <Image
               src="/images/product-img.jpg"
               alt="product image"
@@ -172,13 +165,6 @@ function Home() {
         </div>
       ))}
     </div>
-    //   </>
-    // ):(<>
-    // <div className="w-screen h-screen flex items-center justify-center">
-    // 	<h1 className="text-2xl">Log In First</h1>
-    // 	</div></>)}
-
-    // </>
   );
 }
 

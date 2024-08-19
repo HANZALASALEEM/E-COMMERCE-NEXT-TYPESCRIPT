@@ -6,37 +6,9 @@ import Image from "next/image";
 import { signIn, useSession } from "next-auth/react";
 
 function SignIn() {
-  const { data: session } = useSession();
   const router = useRouter();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-
-  // const signInUser = async (e:FormEvent<HTMLFormElement>) => {
-  // 	e.preventDefault();
-  // 	try {
-  // 		const response = await fetch("/api/signin", {
-  // 			method: "POST",
-  // 			headers: {
-  // 				"Content-Type": "application/json",
-  // 			},
-  // 			body: JSON.stringify({ email, password }),
-  // 		});
-
-  // 		if (response.status === 404) {
-  // 			alert("User not found");
-  // 		} else if (response.status === 200) {
-  // 			const data = await response.json();
-  //             // console.log(data.data)
-  // 			// sessionStorage.setItem("user_id", data.data.id);
-  // 			// router.push("/home")
-  // 			router.push(`/home?user_id=${data.data.id}`);
-  // 		} else {
-  // 			console.error("Signin failed");
-  // 		}
-  // 	} catch (error) {
-  // 		console.error("Error:", error);
-  // 	}
-  // };
 
   const signInUser = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -45,7 +17,6 @@ function SignIn() {
       email: email,
       password: password,
     });
-    console.log(signInData);
     if (signInData) {
       router.push("/home");
     }
@@ -55,40 +26,7 @@ function SignIn() {
     router.push("/");
   };
 
-  // const googleSignIn = async()=>{
-  //     await signIn("google", {
-  // 		callbackUrl: "/home",
-  // 		redirect: true,
-  // 	  });
-  //   }
-  // const googleSignIn = async () => {
-  // 	try {
-  // 	  await signIn("google", {
-  // 		redirect: false,
-  // 	  });
-
-  // 	  const userEmail = session?.user?.email;
-
-  // 	  if (userEmail) {
-  // 		const response = await fetch("/api/findUserWithEmail", {
-  // 		  method: "POST",
-  // 		  headers: {
-  // 			"Content-Type": "application/json",
-  // 		  },
-  // 		  body: JSON.stringify({ userEmail }),
-  // 		});
-
-  // 		const data = await response.json();
-  // 		const userId = data.data.id;
-
-  // 		router.push(`/home?user_id=${userId}`);
-  // 	  }
-  // 	} catch (error) {
-  // 	  console.error("Error during Google sign-in:", error);
-  // 	}
-  //   };
   const googleSignIn = async () => {
-    // try {
     await signIn("google", {
       callbackUrl: "/home",
       redirect: false,
